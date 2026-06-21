@@ -20,21 +20,28 @@ foreach ($label in $data.labels) {
 
 Write-Host "Creating milestones..."
 $milestoneMap = @{}
+$allMilestones = gh api "repos/LakshmanChelliah/BeyBlox/milestones?state=all" | ConvertFrom-Json
 foreach ($ms in $data.milestones) {
-    $created = gh api repos/{owner}/{repo}/milestones -f title=$ms.title -f description=$ms.description -f state=open 2>$null
-    if ($LASTEXITCODE -ne 0) {
-        $existing = gh api repos/{owner}/{repo}/milestones --jq ".[] | select(.title==`"$($ms.title)`") | .number" 2>$null
-        if ($existing) { $milestoneMap[$ms.title] = [int]$existing }
+    $title = $ms.title
+    $found = $allMilestones | Where-Object { $_.title -eq $title } | Select-Object -First 1
+    if ($found) {
+        $milestoneMap[$title] = [int]$found.number
+        Write-Host "  = $title (#$($found.number))"
     } else {
-        $num = ($created | ConvertFrom-Json).number
-        $milestoneMap[$ms.title] = $num
-        Write-Host "  + $($ms.title) (#$num)"
+        $payloadFile = [System.IO.Path]::GetTempFileName()
+        try {
+            $payload = @{ title = $title; description = $ms.description; state = "open" } | ConvertTo-Json -Compress
+            [System.IO.File]::WriteAllText($payloadFile, $payload, [System.Text.UTF8Encoding]::new($false))
+            $result = gh api "repos/LakshmanChelliah/BeyBlox/milestones" --method POST --input $payloadFile
+            $num = ($result | ConvertFrom-Json).number
+            $milestoneMap[$title] = $num
+            $allMilestones += ($result | ConvertFrom-Json)
+            Write-Host "  + $title (#$num)"
+        } finally {
+            Remove-Item $payloadFile -Force -ErrorAction SilentlyContinue
+        }
     }
 }
-
-# Refresh milestone map from API
-$allMs = gh api repos/{owner}/{repo}/milestones --jq ".[] | {title, number}" | ConvertFrom-Json
-foreach ($m in $allMs) { $milestoneMap[$m.title] = $m.number }
 
 Write-Host "Creating issues..."
 $count = 0
