@@ -1,0 +1,21 @@
+[
+  { "name": "phase-1", "color": "1D76DB", "description": "Hub & profiles" },
+  { "name": "phase-2", "color": "0E8A16", "description": "Core battle & physics" },
+  { "name": "phase-3", "color": "5319E7", "description": "Abilities, special moves, VFX" },
+  { "name": "phase-4", "color": "006B75", "description": "PvP & networking" },
+  { "name": "phase-5", "color": "FBCA04", "description": "Campaign & AI" },
+  { "name": "phase-6", "color": "D93F0B", "description": "Meta, XP, shop" },
+  { "name": "phase-7", "color": "B60205", "description": "Tournaments" },
+  { "name": "phase-8", "color": "C5DEF5", "description": "2v2 team modes" },
+  { "name": "phase-9", "color": "E99695", "description": "Parts & customization" },
+  { "name": "phase-10", "color": "FEF2C0", "description": "Polish, audio, QA" },
+  { "name": "physics", "color": "0052CC", "description": "Bey physics & simulation" },
+  { "name": "graphics", "color": "BFD4F2", "description": "Stadium, models, visuals" },
+  { "name": "animations", "color": "D4C5F9", "description": "Motion, cinematics, UI anim" },
+  { "name": "abilities", "color": "F9D0C4", "description": "Special moves & gimmicks" },
+  { "name": "networking", "color": "C2E0C6", "description": "Remotes, snapshots, sync" },
+  { "name": "ui", "color": "EDEDED", "description": "ScreenGuis and HUD" },
+  { "name": "assets", "color": "FEF2C0", "description": "3D models, textures, audio" },
+  { "name": "infra", "color": "666666", "description": "DataStore, security, tooling" },
+  { "name": "blocked", "color": "000000", "description": "Blocked by another issue" }
+]

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Roadmap
+    url: https://github.com/LakshmanChelliah/BeyBlox/blob/main/docs/ROADMAP.md
+    about: Phase-by-phase implementation plan
+  - name: Game Design Doc
+    url: https://github.com/LakshmanChelliah/BeyBlox/blob/main/docs/GAME_DESIGN.md
+    about: Modes, progression, and economy design

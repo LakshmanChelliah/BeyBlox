@@ -1,0 +1,5 @@
+{
+  "campaignOpponentOrder": ["bull", "libra", "leone", "pegasus", "ldrago"],
+  "winsNeededPerSeries": 2,
+  "aiTierByStage": { "bull": 0, "libra": 1, "leone": 2, "pegasus": 3, "ldrago": 4 }
+}

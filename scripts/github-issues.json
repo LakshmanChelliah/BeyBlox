@@ -1,0 +1,1059 @@
+{
+  "labels": [
+    {
+      "name": "phase-1",
+      "color": "1D76DB",
+      "description": "Hub & profiles"
+    },
+    {
+      "name": "phase-2",
+      "color": "0E8A16",
+      "description": "Core battle & physics"
+    },
+    {
+      "name": "phase-3",
+      "color": "5319E7",
+      "description": "Abilities, special moves, VFX"
+    },
+    {
+      "name": "phase-4",
+      "color": "006B75",
+      "description": "PvP & networking"
+    },
+    {
+      "name": "phase-5",
+      "color": "FBCA04",
+      "description": "Campaign & AI"
+    },
+    {
+      "name": "phase-6",
+      "color": "D93F0B",
+      "description": "Meta, XP, shop"
+    },
+    {
+      "name": "phase-7",
+      "color": "B60205",
+      "description": "Tournaments"
+    },
+    {
+      "name": "phase-8",
+      "color": "C5DEF5",
+      "description": "2v2 team modes"
+    },
+    {
+      "name": "phase-9",
+      "color": "E99695",
+      "description": "Parts & customization"
+    },
+    {
+      "name": "phase-10",
+      "color": "FEF2C0",
+      "description": "Polish, audio, QA"
+    },
+    {
+      "name": "physics",
+      "color": "0052CC",
+      "description": "Bey physics & simulation"
+    },
+    {
+      "name": "graphics",
+      "color": "BFD4F2",
+      "description": "Stadium, models, visuals"
+    },
+    {
+      "name": "animations",
+      "color": "D4C5F9",
+      "description": "Motion, cinematics, UI anim"
+    },
+    {
+      "name": "abilities",
+      "color": "F9D0C4",
+      "description": "Special moves & gimmicks"
+    },
+    {
+      "name": "networking",
+      "color": "C2E0C6",
+      "description": "Remotes, snapshots, sync"
+    },
+    {
+      "name": "ui",
+      "color": "EDEDED",
+      "description": "ScreenGuis and HUD"
+    },
+    {
+      "name": "assets",
+      "color": "FEF2C0",
+      "description": "3D models, textures, audio"
+    },
+    {
+      "name": "infra",
+      "color": "666666",
+      "description": "DataStore, security, tooling"
+    },
+    {
+      "name": "blocked",
+      "color": "000000",
+      "description": "Blocked by another issue"
+    }
+  ],
+  "milestones": [
+    {
+      "title": "Phase 1: Hub & Profiles",
+      "description": "Roblox place, hub world, DataStore profiles, bey select UI, remotes scaffolding."
+    },
+    {
+      "title": "Phase 2: Core Battle",
+      "description": "Arena physics, graphics, animations, battle HUD, and win rules — playable 1v1 without abilities."
+    },
+    {
+      "title": "Phase 3: Abilities & Assets",
+      "description": "Import BeyWeb models/logos, ability registry, all 10 special moves with VFX."
+    },
+    {
+      "title": "Phase 4: PvP & Networking",
+      "description": "Authoritative match sync, ranked queue, ELO, leaderboards."
+    },
+    {
+      "title": "Phase 5: Campaign & AI",
+      "description": "Campaign stages, AI tiers, casual mode, CPU difficulty."
+    },
+    {
+      "title": "Phase 6: Meta & Shop",
+      "description": "XP, coins, gacha rolls, Robux products, progression unlocks."
+    },
+    {
+      "title": "Phase 7: Tournaments",
+      "description": "Bracket events, entry gates, scheduled UI, placement rewards."
+    },
+    {
+      "title": "Phase 8: 2v2 Team Modes",
+      "description": "Party queue, team spawns, team ELO, tag-team battles."
+    },
+    {
+      "title": "Phase 9: Parts & Customization",
+      "description": "Part catalog, bey builder, stat recompute, color variants, drops."
+    },
+    {
+      "title": "Phase 10: Polish & QA",
+      "description": "Audio, camera polish, mobile UX, anti-cheat, tests, load testing, seasonal badges."
+    }
+  ],
+  "issues": [
+    {
+      "title": "Create Roblox Hub place and Rojo sync",
+      "body": "## Summary\nSet up the primary Hub place in Roblox Studio and wire Rojo so `src/` syncs into the DataModel on play.\n\n## Acceptance criteria\n- [ ] Hub place file exists and opens in Studio\n- [ ] `default.project.json` maps all `src/` folders\n- [ ] Rojo serve + Studio connect works without errors\n- [ ] StarterPlayer and ServerScriptService scripts run on join\n\n## BeyWeb reference\n- `default.project.json`\n- `aftman.toml` / `wally.toml`\n- `src/` tree\n\n## BeyBlox target paths\n- `default.project.json`\n- `src/ServerScriptService/init.server.lua`\n- `src/StarterPlayer/StarterPlayerScripts/init.client.lua`",
+      "labels": [
+        "phase-1",
+        "infra"
+      ],
+      "milestone": "Phase 1: Hub & Profiles"
+    },
+    {
+      "title": "Hub spawn area and mode portals",
+      "body": "## Summary\nBuild the hub spawn plaza with teleporter portals for Ranked, Casual, Campaign, Shop, and Tournaments.\n\n## Acceptance criteria\n- [ ] SpawnLocation with safe bounds\n- [ ] Portal parts or ProximityPrompts for each game mode\n- [ ] Client UI labels each portal\n- [ ] Server validates teleport requests\n\n## BeyWeb reference\n- `js/ui/playSetup.js` (mode select flow)\n- `js/ui/onlineLobby.js`\n\n## BeyBlox target paths\n- `src/Workspace/Hub/` (Studio)\n- `src/ReplicatedStorage/Shared/GameModes.lua`\n- Hub ScreenGui in `src/StarterGui/`",
+      "labels": [
+        "phase-1",
+        "graphics",
+        "ui"
+      ],
+      "milestone": "Phase 1: Hub & Profiles"
+    },
+    {
+      "title": "ProfileService DataStore with session lock",
+      "body": "## Summary\nPersist player profiles (owned beys, coins, XP, settings) using ProfileService with session locking.\n\n## Acceptance criteria\n- [ ] Profile template loads on PlayerAdded\n- [ ] Session lock prevents duplicate servers\n- [ ] Auto-save on interval and PlayerRemoving\n- [ ] Reconcile defaults for new fields\n\n## BeyWeb reference\n- `js/game/state.js` (local state shape)\n- `docs/PROGRESSION_ECONOMY.md`\n\n## BeyBlox target paths\n- `src/ServerScriptService/ProfileService.lua`\n- `src/ReplicatedStorage/Shared/Progression.lua`\n- DataStore: `PlayerProfiles_v1`",
+      "labels": [
+        "phase-1",
+        "infra"
+      ],
+      "milestone": "Phase 1: Hub & Profiles"
+    },
+    {
+      "title": "Bey select carousel UI",
+      "body": "## Summary\nPort BeyWeb bey selection carousel to a hub ScreenGui with previews for owned beys.\n\n## Acceptance criteria\n- [ ] Carousel scrolls through owned beys\n- [ ] Selected bey saved to profile\n- [ ] Shows bey name, type, and stats summary\n- [ ] Works on PC and mobile\n\n## BeyWeb reference\n- `js/ui/selection.js`\n- `js/game/beys.js`\n\n## BeyBlox target paths\n- `src/StarterGui/BeySelect/`\n- `src/ReplicatedStorage/Shared/BeyCatalog.lua`\n- `reference/beys.json`",
+      "labels": [
+        "phase-1",
+        "ui"
+      ],
+      "milestone": "Phase 1: Hub & Profiles"
+    },
+    {
+      "title": "Basic inventory display UI",
+      "body": "## Summary\nShow owned beys, parts placeholder, coins, and XP in a hub inventory panel.\n\n## Acceptance criteria\n- [ ] Inventory opens from hub button\n- [ ] Lists owned beys from profile\n- [ ] Displays coin and XP totals\n- [ ] Read-only until shop phase\n\n## BeyWeb reference\n- `js/ui/domRefs.js`\n\n## BeyBlox target paths\n- `src/StarterGui/Inventory/`\n- Remote: `Remotes/ProfileSync`",
+      "labels": [
+        "phase-1",
+        "ui"
+      ],
+      "milestone": "Phase 1: Hub & Profiles"
+    },
+    {
+      "title": "ReplicatedStorage remotes scaffolding",
+      "body": "## Summary\nCreate RemoteEvents/RemoteFunctions folder and document contracts for profile, match, and shop.\n\n## Acceptance criteria\n- [ ] Remotes folder under ReplicatedStorage\n- [ ] MatchInput, MatchSnapshot, ProfileSync stubs exist\n- [ ] README documents payload shapes\n- [ ] Server binds handlers without errors\n\n## BeyWeb reference\n- `js/net/protocol.js`\n- `js/net/remoteInput.js`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Remotes/`\n- `src/ReplicatedStorage/Remotes/README.md`",
+      "labels": [
+        "phase-1",
+        "networking",
+        "infra"
+      ],
+      "milestone": "Phase 1: Hub & Profiles"
+    },
+    {
+      "title": "Shared Config module from BeyWeb constants",
+      "body": "## Summary\nPort `js/config.js` tuning values into a Luau Config module used by physics and rules.\n\n## Acceptance criteria\n- [ ] Gravity, spin decay, arena radius constants match BeyWeb\n- [ ] Launch grace and clash tuning exported\n- [ ] Single source imported by server physics\n- [ ] Values documented against `reference/config.json`\n\n## BeyWeb reference\n- `js/config.js`\n- `reference/config.json`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Config.lua`\n- `reference/config.json`",
+      "labels": [
+        "phase-2",
+        "physics",
+        "infra"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Bey body spawn and collider setup",
+      "body": "## Summary\nSpawn bey MeshParts in arena with correct scale, mass, and cylindrical collider for manual clash math.\n\n## Acceptance criteria\n- [ ] Bey spawns at launch points with correct height\n- [ ] Collider radius matches BeyWeb `top.js`\n- [ ] Default Roblox elasticity disabled\n- [ ] Body state table tracks position, velocity, spin\n\n## BeyWeb reference\n- `js/physics/top.js`\n- `js/game/matchFactory.js`\n\n## BeyBlox target paths\n- `src/ServerScriptService/Physics/BeyBody.lua`\n- `src/ServerScriptService/MatchService.lua`",
+      "labels": [
+        "phase-2",
+        "physics"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Spin gauge decay over time",
+      "body": "## Summary\nImplement 0–1 spin gauge drain matching BeyWeb stamina curves.\n\n## Acceptance criteria\n- [ ] Spin decreases per tick at CONFIG rate\n- [ ] Low spin triggers wobble threshold\n- [ ] Spin reaches zero → sleep-out eligible\n- [ ] Spin synced in MatchSnapshot\n\n## BeyWeb reference\n- `js/physics/top.js` (spin decay)\n- `js/config.js`\n\n## BeyBlox target paths\n- `src/ServerScriptService/Physics/Spin.lua`\n- `src/ReplicatedStorage/Shared/Config.lua`",
+      "labels": [
+        "phase-2",
+        "physics"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Steering input port from steer.js",
+      "body": "## Summary\nPort BeyWeb steering forces from player input to server-side bey velocity changes.\n\n## Acceptance criteria\n- [ ] Steer vector applied each physics tick\n- [ ] Steer strength scales with spin gauge\n- [ ] Launch grace period blocks steering\n- [ ] Matches BeyWeb feel in local test\n\n## BeyWeb reference\n- `js/physics/steer.js`\n\n## BeyBlox target paths\n- `src/ServerScriptService/Physics/Steer.lua`\n- `src/ReplicatedStorage/Shared/Config.lua`",
+      "labels": [
+        "phase-2",
+        "physics"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Custom bey-vs-bey clash resolver",
+      "body": "## Summary\nPort Cannon-es bypass clash math from `contact.js` — manual impulse on XZ plane.\n\n## Acceptance criteria\n- [ ] Top-top contacts resolved manually each tick\n- [ ] Knockback scales with relative velocity and stats\n- [ ] Spin transfer on clash matches BeyWeb\n- [ ] No default Roblox collision response used\n\n## BeyWeb reference\n- `js/physics/contact.js`\n- `js/game/stats.js`\n\n## BeyBlox target paths\n- `src/ServerScriptService/Physics/Contact.lua`\n- `src/ReplicatedStorage/Shared/Stats.lua`",
+      "labels": [
+        "phase-2",
+        "physics"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Arena wall bounce physics",
+      "body": "## Summary\nPort rim wall reflection from BeyWeb arena geometry with correct angle and damping.\n\n## Acceptance criteria\n- [ ] Bey reflects off bowl inner wall\n- [ ] Wall bounce damping matches CONFIG\n- [ ] No escape through mesh gaps\n- [ ] Unit test against known angle in/out\n\n## BeyWeb reference\n- `js/physics/arena.js`\n- `js/physics/arenaGeometry.js`\n\n## BeyBlox target paths\n- `src/ServerScriptService/Physics/Arena.lua`\n- `src/ReplicatedStorage/Shared/Config.lua`",
+      "labels": [
+        "phase-2",
+        "physics"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Center pull (sonic quicksand base)",
+      "body": "## Summary\nImplement radial pull toward arena center used by Libra buster and base physics tuning.\n\n## Acceptance criteria\n- [ ] Pull force scales with distance from center\n- [ ] Disabled during launch grace\n- [ ] Tunable via Config module\n- [ ] Used by passive arena curve\n\n## BeyWeb reference\n- `js/physics/arena.js` (center pull)\n- `js/config.js`\n\n## BeyBlox target paths\n- `src/ServerScriptService/Physics/Arena.lua`",
+      "labels": [
+        "phase-2",
+        "physics"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Wobble and sleep-out detection",
+      "body": "## Summary\nPort wobble tilt progression and sleep-out win condition when spin hits zero in-bowl.\n\n## Acceptance criteria\n- [ ] Wobble visual state triggered below threshold\n- [ ] Sleep-out declared when spin = 0 and in bounds\n- [ ] Wobble increases tip-over chance near rim\n- [ ] State included in snapshot for client anim\n\n## BeyWeb reference\n- `js/physics/top.js`\n- `js/game/rules.js`\n\n## BeyBlox target paths\n- `src/ServerScriptService/Physics/Spin.lua`\n- `src/ReplicatedStorage/Shared/Rules.lua`",
+      "labels": [
+        "phase-2",
+        "physics"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "KO pocket detection port arena.js",
+      "body": "## Summary\nDetect ring-outs through 3 KO pockets using BeyWeb pocket angle constants.\n\n## Acceptance criteria\n- [ ] Three pockets at correct bowl angles\n- [ ] Ring-out when bey center crosses pocket threshold\n- [ ] KO awards round to opponent\n- [ ] Pocket geometry matches BeyWeb epsilon\n\n## BeyWeb reference\n- `js/physics/arena.js`\n- `js/physics/ringOut.js`\n\n## BeyBlox target paths\n- `src/ServerScriptService/Physics/Arena.lua`\n- `src/ServerScriptService/Physics/RingOut.lua`",
+      "labels": [
+        "phase-2",
+        "physics"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Win rules evaluation (KO / SO / draw)",
+      "body": "## Summary\nPort round and match win detection from BeyWeb rules module.\n\n## Acceptance criteria\n- [ ] KO, sleep-out, and draw detected server-side\n- [ ] Simultaneous KO resolves per BeyWeb tiebreak\n- [ ] Round result broadcast to clients\n- [ ] Rules module unit-tested\n\n## BeyWeb reference\n- `js/game/rules.js`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Rules.lua`\n- `src/ServerScriptService/MatchService.lua`",
+      "labels": [
+        "phase-2",
+        "physics"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Best-of-3 series flow",
+      "body": "## Summary\nImplement 3-round series with score tracking and match end screen.\n\n## Acceptance criteria\n- [ ] First to 2 rounds wins series\n- [ ] Series score resets between matches\n- [ ] Inter-round reset spawns beys at launch points\n- [ ] Series HUD shows W-L per player\n\n## BeyWeb reference\n- `js/game/engine.js` (series state)\n- `js/game/modes.js`\n\n## BeyBlox target paths\n- `src/ServerScriptService/MatchService.lua`\n- `src/ReplicatedStorage/Shared/GameModes.lua`",
+      "labels": [
+        "phase-2",
+        "physics",
+        "ui"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Battle input controller (PC + mobile)",
+      "body": "## Summary\nPort keyboard, touch, and gyro steering input to send normalized steer vectors.\n\n## Acceptance criteria\n- [ ] WASD / arrow keys steer on PC\n- [ ] Touch drag steer on mobile\n- [ ] Ability button sends activate event\n- [ ] Input sampled at 60Hz for local/offline test\n\n## BeyWeb reference\n- `js/input/keyboard.js`\n- `js/input/gyro.js`\n- `js/main-pc.js`\n- `js/main-mobile.js`\n\n## BeyBlox target paths\n- `src/StarterPlayer/StarterPlayerScripts/InputController.client.lua`\n- `src/StarterGui/BattleHUD/AbilityButton`",
+      "labels": [
+        "phase-2",
+        "ui",
+        "physics"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Stadium bowl mesh",
+      "body": "## Summary\nModel the battle stadium bowl MeshPart matching BeyWeb arena proportions.\n\n## Acceptance criteria\n- [ ] Bowl radius matches CONFIG.ARENA_RADIUS\n- [ ] Inner surface smooth for wall bounce\n- [ ] Collision aligned with physics wall math\n- [ ] LOD acceptable on mobile\n\n## BeyWeb reference\n- `js/render/arena.js`\n- `js/physics/arenaGeometry.js`\n\n## BeyBlox target paths\n- `src/Workspace/Arena/StadiumBowl` (Studio)\n- `assets/Arena/`",
+      "labels": [
+        "phase-2",
+        "graphics"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Marble platform and barrier graphics",
+      "body": "## Summary\nBuild launch platform and outer barrier visuals around the bowl.\n\n## Acceptance criteria\n- [ ] Dual launch platforms at correct positions\n- [ ] Outer barrier prevents camera clip\n- [ ] Materials match BeyWeb marble aesthetic\n- [ ] No gameplay collision on decorative parts\n\n## BeyWeb reference\n- `js/render/arena.js`\n- `js/render/scene.js`\n\n## BeyBlox target paths\n- `src/Workspace/Arena/Platform`\n- `src/Workspace/Arena/Barrier`",
+      "labels": [
+        "phase-2",
+        "graphics"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "KO pocket visual indicators",
+      "body": "## Summary\nAdd visible KO pocket openings and rim markings on the bowl.\n\n## Acceptance criteria\n- [ ] Three pocket gaps visible from spectator cam\n- [ ] Pocket edges highlighted\n- [ ] Consistent with ring-out detection angles\n- [ ] Optional glow when bey nears pocket\n\n## BeyWeb reference\n- `js/render/arena.js`\n- `js/physics/arena.js`\n\n## BeyBlox target paths\n- `src/Workspace/Arena/KOPockets`\n- `src/ServerScriptService/Physics/RingOut.lua`",
+      "labels": [
+        "phase-2",
+        "graphics"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Arena lighting and skybox",
+      "body": "## Summary\nSet up Lighting service, skybox, and post-FX for readable bey silhouettes.\n\n## Acceptance criteria\n- [ ] Consistent lighting across Hub and Arena places\n- [ ] Bey team colors readable on bowl\n- [ ] Mobile performance budget respected\n- [ ] No harsh specular on spin blur\n\n## BeyWeb reference\n- `js/render/scene.js`\n\n## BeyBlox target paths\n- `src/Lighting/` (Studio)\n- `src/Workspace/Arena/`",
+      "labels": [
+        "phase-2",
+        "graphics"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Spectator battle camera",
+      "body": "## Summary\nImplement follow/orbit camera for battles with smooth framing of both beys.\n\n## Acceptance criteria\n- [ ] Camera tracks midpoint between beys\n- [ ] Zoom adjusts to separation distance\n- [ ] Spectator mode for hub viewers\n- [ ] Cinematic override hooks for KO\n\n## BeyWeb reference\n- `js/render/scene.js` (camera rig)\n\n## BeyBlox target paths\n- `src/StarterPlayer/StarterPlayerScripts/BattleCamera.client.lua`",
+      "labels": [
+        "phase-2",
+        "graphics"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Spin CFrame visual rotation",
+      "body": "## Summary\nApply visual spin via CFrame rotation decoupled from physics position.\n\n## Acceptance criteria\n- [ ] Spin rate matches gauge on client\n- [ ] Visual spin continues during wobble\n- [ ] No physics desync from visual\n- [ ] Works with imported bey meshes\n\n## BeyWeb reference\n- `js/render/top.js`\n\n## BeyBlox target paths\n- `src/StarterPlayer/StarterPlayerScripts/BeyVisual.client.lua`\n- `src/ReplicatedStorage/Shared/Config.lua`",
+      "labels": [
+        "phase-2",
+        "animations"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Launch countdown 3-2-1",
+      "body": "## Summary\nPre-round countdown UI and server gate before launch drop.\n\n## Acceptance criteria\n- [ ] 3-2-1-GO displayed on ScreenGui\n- [ ] Server blocks physics until GO\n- [ ] Countdown synced for both players\n- [ ] Audio hook placeholder\n\n## BeyWeb reference\n- `js/game/engine.js` (launch sequence)\n\n## BeyBlox target paths\n- `src/StarterGui/BattleHUD/Countdown`\n- `src/ServerScriptService/MatchService.lua`",
+      "labels": [
+        "phase-2",
+        "animations",
+        "ui"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Launch drop-in animation",
+      "body": "## Summary\nAnimate bey drop from launch height into bowl at round start.\n\n## Acceptance criteria\n- [ ] Drop from platform height over grace period\n- [ ] Landing does not apply clash until grace ends\n- [ ] Drop synced from snapshot spawn state\n- [ ] Smooth easing on client\n\n## BeyWeb reference\n- `js/game/engine.js`\n- `js/physics/top.js`\n\n## BeyBlox target paths\n- `src/StarterPlayer/StarterPlayerScripts/BeyVisual.client.lua`\n- `src/ServerScriptService/Physics/BeyBody.lua`",
+      "labels": [
+        "phase-2",
+        "animations"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Wobble tip-over death animation",
+      "body": "## Summary\nAnimate increasing tilt and tip-over when spin is critically low.\n\n## Acceptance criteria\n- [ ] Tilt angle scales inversely with spin\n- [ ] Tip-over plays on sleep-out\n- [ ] Bey settles flat after tip\n- [ ] Driven by snapshot wobble field\n\n## BeyWeb reference\n- `js/render/top.js`\n- `js/physics/top.js`\n\n## BeyBlox target paths\n- `src/StarterPlayer/StarterPlayerScripts/BeyVisual.client.lua`",
+      "labels": [
+        "phase-2",
+        "animations"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "KO ring-out cinematic",
+      "body": "## Summary\nPort ring-out fly-out and slow emphasis from BeyWeb `ringOut.js`.\n\n## Acceptance criteria\n- [ ] Bey arcs out through pocket on KO\n- [ ] Brief camera follow on ring-out\n- [ ] Round end triggered after anim\n- [ ] Client VFX only; server already decided KO\n\n## BeyWeb reference\n- `js/physics/ringOut.js`\n- `js/render/scene.js`\n\n## BeyBlox target paths\n- `src/StarterPlayer/StarterPlayerScripts/RingOutCinematic.client.lua`\n- `src/ServerScriptService/Physics/RingOut.lua`",
+      "labels": [
+        "phase-2",
+        "animations"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Battle HUD spin percentage bars",
+      "body": "## Summary\nShow each bey's spin gauge as percentage bars during battle.\n\n## Acceptance criteria\n- [ ] P1/P2 spin % updates every frame\n- [ ] Color shifts when low spin\n- [ ] Bars hidden during countdown\n- [ ] Mobile-safe layout\n\n## BeyWeb reference\n- `js/ui/domRefs.js`\n- `js/game/state.js`\n\n## BeyBlox target paths\n- `src/StarterGui/BattleHUD/SpinBars`",
+      "labels": [
+        "phase-2",
+        "ui"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Ability cooldown bars on battle HUD",
+      "body": "## Summary\nDisplay power/special cooldown progress for local player's bey.\n\n## Acceptance criteria\n- [ ] Two ability slots with cooldown fill\n- [ ] Ready state pulses subtly\n- [ ] Cooldown from snapshot ability state\n- [ ] Greyed when locked by rules\n\n## BeyWeb reference\n- `js/ui/domRefs.js`\n- `js/game/abilities/index.js`\n\n## BeyBlox target paths\n- `src/StarterGui/BattleHUD/AbilityCooldowns`",
+      "labels": [
+        "phase-2",
+        "ui"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Collision sparks VFX",
+      "body": "## Summary\nPort clash spark particles from BeyWeb collision VFX.\n\n## Acceptance criteria\n- [ ] Sparks emit on bey-vs-bey clash\n- [ ] Intensity scales with impact speed\n- [ ] Client-only Particles; no network spam\n- [ ] Pooled for performance\n\n## BeyWeb reference\n- `js/render/collisionSparksVfx.js`\n- `js/physics/collisionSparks.js`\n\n## BeyBlox target paths\n- `src/StarterPlayer/StarterPlayerScripts/VFX/CollisionSparks.client.lua`",
+      "labels": [
+        "phase-2",
+        "graphics",
+        "ui"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Series score HUD",
+      "body": "## Summary\nDisplay best-of-3 round wins during a series.\n\n## Acceptance criteria\n- [ ] Round dots or numeric W-L shown\n- [ ] Updates on round end event\n- [ ] Persists across inter-round countdown\n- [ ] Clears on match end\n\n## BeyWeb reference\n- `js/game/engine.js`\n\n## BeyBlox target paths\n- `src/StarterGui/BattleHUD/SeriesScore`",
+      "labels": [
+        "phase-2",
+        "ui"
+      ],
+      "milestone": "Phase 2: Core Battle"
+    },
+    {
+      "title": "Import Storm Pegasus bey GLB",
+      "body": "## Summary\nImport `storm_pegasus.glb` from BeyWeb through Blender into Roblox MeshParts.\n\n## Acceptance criteria\n- [ ] GLB imported to `assets/Beys/{folder}/`\n- [ ] Scale matches arena collider radius\n- [ ] Pivot at disc center\n- [ ] Textures render correctly in Studio\n\n## BeyWeb reference\n- `storm_pegasus.glb` (BeyWeb root)\n- `js/game/beys.js`\n\n## BeyBlox target paths\n- `assets/Beys/Pegasus/`\n- `src/ReplicatedStorage/Shared/BeyCatalog.lua`",
+      "labels": [
+        "phase-3",
+        "assets"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Import Storm Pegasus logo PNG",
+      "body": "## Summary\nImport `PegasusLogo.png` for ability flash UI and bey select.\n\n## Acceptance criteria\n- [ ] PNG in `assets/UI/Logos/`\n- [ ] ImageLabel-ready resolution\n- [ ] Used in bey carousel\n- [ ] Referenced by ability registry\n\n## BeyWeb reference\n- `PegasusLogo.png` (BeyWeb root)\n\n## BeyBlox target paths\n- `assets/UI/Logos/PegasusLogo.png`\n- `src/StarterGui/BeySelect/`",
+      "labels": [
+        "phase-3",
+        "assets",
+        "ui"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Import Meteo L-Drago bey GLB",
+      "body": "## Summary\nImport `meteo_ldrago.glb` from BeyWeb through Blender into Roblox MeshParts.\n\n## Acceptance criteria\n- [ ] GLB imported to `assets/Beys/{folder}/`\n- [ ] Scale matches arena collider radius\n- [ ] Pivot at disc center\n- [ ] Textures render correctly in Studio\n\n## BeyWeb reference\n- `meteo_ldrago.glb` (BeyWeb root)\n- `js/game/beys.js`\n\n## BeyBlox target paths\n- `assets/Beys/LDrago/`\n- `src/ReplicatedStorage/Shared/BeyCatalog.lua`",
+      "labels": [
+        "phase-3",
+        "assets"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Import Meteo L-Drago logo PNG",
+      "body": "## Summary\nImport `LDragoLogo.png` for ability flash UI and bey select.\n\n## Acceptance criteria\n- [ ] PNG in `assets/UI/Logos/`\n- [ ] ImageLabel-ready resolution\n- [ ] Used in bey carousel\n- [ ] Referenced by ability registry\n\n## BeyWeb reference\n- `LDragoLogo.png` (BeyWeb root)\n\n## BeyBlox target paths\n- `assets/UI/Logos/LDragoLogo.png`\n- `src/StarterGui/BeySelect/`",
+      "labels": [
+        "phase-3",
+        "assets",
+        "ui"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Import Rock Leone bey GLB",
+      "body": "## Summary\nImport `rock_leone.glb` from BeyWeb through Blender into Roblox MeshParts.\n\n## Acceptance criteria\n- [ ] GLB imported to `assets/Beys/{folder}/`\n- [ ] Scale matches arena collider radius\n- [ ] Pivot at disc center\n- [ ] Textures render correctly in Studio\n\n## BeyWeb reference\n- `rock_leone.glb` (BeyWeb root)\n- `js/game/beys.js`\n\n## BeyBlox target paths\n- `assets/Beys/Leone/`\n- `src/ReplicatedStorage/Shared/BeyCatalog.lua`",
+      "labels": [
+        "phase-3",
+        "assets"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Import Rock Leone logo PNG",
+      "body": "## Summary\nImport `LeoneLogo.png` for ability flash UI and bey select.\n\n## Acceptance criteria\n- [ ] PNG in `assets/UI/Logos/`\n- [ ] ImageLabel-ready resolution\n- [ ] Used in bey carousel\n- [ ] Referenced by ability registry\n\n## BeyWeb reference\n- `LeoneLogo.png` (BeyWeb root)\n\n## BeyBlox target paths\n- `assets/UI/Logos/LeoneLogo.png`\n- `src/StarterGui/BeySelect/`",
+      "labels": [
+        "phase-3",
+        "assets",
+        "ui"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Import Flame Libra bey GLB",
+      "body": "## Summary\nImport `flame_libra.glb` from BeyWeb through Blender into Roblox MeshParts.\n\n## Acceptance criteria\n- [ ] GLB imported to `assets/Beys/{folder}/`\n- [ ] Scale matches arena collider radius\n- [ ] Pivot at disc center\n- [ ] Textures render correctly in Studio\n\n## BeyWeb reference\n- `flame_libra.glb` (BeyWeb root)\n- `js/game/beys.js`\n\n## BeyBlox target paths\n- `assets/Beys/Libra/`\n- `src/ReplicatedStorage/Shared/BeyCatalog.lua`",
+      "labels": [
+        "phase-3",
+        "assets"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Import Flame Libra logo PNG",
+      "body": "## Summary\nImport `LibraLogo.png` for ability flash UI and bey select.\n\n## Acceptance criteria\n- [ ] PNG in `assets/UI/Logos/`\n- [ ] ImageLabel-ready resolution\n- [ ] Used in bey carousel\n- [ ] Referenced by ability registry\n\n## BeyWeb reference\n- `LibraLogo.png` (BeyWeb root)\n\n## BeyBlox target paths\n- `assets/UI/Logos/LibraLogo.png`\n- `src/StarterGui/BeySelect/`",
+      "labels": [
+        "phase-3",
+        "assets",
+        "ui"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Import Dark Bull bey GLB",
+      "body": "## Summary\nImport `dark_bull.glb` from BeyWeb through Blender into Roblox MeshParts.\n\n## Acceptance criteria\n- [ ] GLB imported to `assets/Beys/{folder}/`\n- [ ] Scale matches arena collider radius\n- [ ] Pivot at disc center\n- [ ] Textures render correctly in Studio\n\n## BeyWeb reference\n- `dark_bull.glb` (BeyWeb root)\n- `js/game/beys.js`\n\n## BeyBlox target paths\n- `assets/Beys/Bull/`\n- `src/ReplicatedStorage/Shared/BeyCatalog.lua`",
+      "labels": [
+        "phase-3",
+        "assets"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Import Dark Bull logo PNG",
+      "body": "## Summary\nImport `BullLogo.png` for ability flash UI and bey select.\n\n## Acceptance criteria\n- [ ] PNG in `assets/UI/Logos/`\n- [ ] ImageLabel-ready resolution\n- [ ] Used in bey carousel\n- [ ] Referenced by ability registry\n\n## BeyWeb reference\n- `BullLogo.png` (BeyWeb root)\n\n## BeyBlox target paths\n- `assets/UI/Logos/BullLogo.png`\n- `src/StarterGui/BeySelect/`",
+      "labels": [
+        "phase-3",
+        "assets",
+        "ui"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Asset pipeline documentation and import script",
+      "body": "## Summary\nDocument and script the Blender → Roblox pipeline for bey models and logos.\n\n## Acceptance criteria\n- [ ] `assets/README.md` complete with steps\n- [ ] Optional script automates FBX export naming\n- [ ] Scale and pivot conventions documented\n- [ ] New bey checklist for future parts\n\n## BeyWeb reference\n- `assets/README.md` (BeyBlox)\n- BeyWeb GLB/PNG assets\n\n## BeyBlox target paths\n- `assets/README.md`\n- `scripts/import-assets.ps1` (optional)",
+      "labels": [
+        "phase-3",
+        "assets",
+        "infra"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Ability registry pattern",
+      "body": "## Summary\nPort BeyWeb ability registry with onActivate, onStep, onEnd, onContact hooks.\n\n## Acceptance criteria\n- [ ] Registry maps ability id → ModuleScript\n- [ ] Server runs ability ticks in MatchService\n- [ ] Client receives ability state in snapshot\n- [ ] Matches `reference/abilities.json` ids\n\n## BeyWeb reference\n- `js/game/abilities/index.js`\n- `js/game/abilities/impl.js`\n- `reference/abilities.json`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Abilities/init.lua`\n- `src/ReplicatedStorage/Shared/Abilities/*.lua`",
+      "labels": [
+        "phase-3",
+        "abilities",
+        "infra"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Special move logo flash ScreenGui",
+      "body": "## Summary\nFull-screen bey logo flash when special ability activates (client VFX).\n\n## Acceptance criteria\n- [ ] Logo image per bey type\n- [ ] Flash on special activate event\n- [ ] Tween fade in/out under 1s\n- [ ] Does not block input\n\n## BeyWeb reference\n- `js/render/scene.js` (ability flash)\n- BeyWeb `*Logo.png`\n\n## BeyBlox target paths\n- `src/StarterGui/AbilityFlash/`\n- `assets/UI/Logos/`",
+      "labels": [
+        "phase-3",
+        "abilities",
+        "ui"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Port ability: pegasus_speed_boost",
+      "body": "## Summary\nPegasus power move — temporary steer and speed multiplier.\n\n## Acceptance criteria\n- [ ] Server logic matches BeyWeb `pegasus_speed_boost` in impl.js\n- [ ] Cooldown and duration from abilities.json\n- [ ] onContact/onStep hooks wired in MatchService\n- [ ] Client VFX port from js/render/pegasusSpeedBoostVfx.js\n- [ ] Parity spot-check vs BeyWeb local match\n\n## BeyWeb reference\n- `js/game/abilities/impl.js` (`pegasus_speed_boost`)\n- `js/render/pegasusSpeedBoostVfx.js`\n- `reference/abilities.json`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Abilities/PegasusSpeedBoost.lua`\n- `src/StarterPlayer/StarterPlayerScripts/VFX/PegasusSpeedBoost.client.lua`",
+      "labels": [
+        "phase-3",
+        "abilities"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Port ability: pegasus_star_blast",
+      "body": "## Summary\nPegasus special — multi-phase cinematic dash and burst attack.\n\n## Acceptance criteria\n- [ ] Server logic matches BeyWeb `pegasus_star_blast` in impl.js\n- [ ] Cooldown and duration from abilities.json\n- [ ] onContact/onStep hooks wired in MatchService\n- [ ] Client VFX port from js/render/starBlastVfx.js\n- [ ] Parity spot-check vs BeyWeb local match\n\n## BeyWeb reference\n- `js/game/abilities/impl.js` (`pegasus_star_blast`)\n- `js/render/starBlastVfx.js`\n- `reference/abilities.json`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Abilities/PegasusStarBlast.lua`\n- `src/StarterPlayer/StarterPlayerScripts/VFX/PegasusStarBlast.client.lua`",
+      "labels": [
+        "phase-3",
+        "abilities"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Port ability: ldrago_spin_steal",
+      "body": "## Summary\nL-Drago power — steal opponent spin on collision.\n\n## Acceptance criteria\n- [ ] Server logic matches BeyWeb `ldrago_spin_steal` in impl.js\n- [ ] Cooldown and duration from abilities.json\n- [ ] onContact/onStep hooks wired in MatchService\n- [ ] Client VFX port from js/render/ldragoAbilityVfx.js\n- [ ] Parity spot-check vs BeyWeb local match\n\n## BeyWeb reference\n- `js/game/abilities/impl.js` (`ldrago_spin_steal`)\n- `js/render/ldragoAbilityVfx.js`\n- `reference/abilities.json`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Abilities/LDragoSpinSteal.lua`\n- `src/StarterPlayer/StarterPlayerScripts/VFX/LDragoSpinSteal.client.lua`",
+      "labels": [
+        "phase-3",
+        "abilities"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Port ability: ldrago_supreme_flight",
+      "body": "## Summary\nL-Drago special — hover flight with lightning strikes.\n\n## Acceptance criteria\n- [ ] Server logic matches BeyWeb `ldrago_supreme_flight` in impl.js\n- [ ] Cooldown and duration from abilities.json\n- [ ] onContact/onStep hooks wired in MatchService\n- [ ] Client VFX port from js/render/ldragoAbilityVfx.js\n- [ ] Parity spot-check vs BeyWeb local match\n\n## BeyWeb reference\n- `js/game/abilities/impl.js` (`ldrago_supreme_flight`)\n- `js/render/ldragoAbilityVfx.js`\n- `reference/abilities.json`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Abilities/LDragoSupremeFlight.lua`\n- `src/StarterPlayer/StarterPlayerScripts/VFX/LDragoSupremeFlight.client.lua`",
+      "labels": [
+        "phase-3",
+        "abilities"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Port ability: leone_wide_ball",
+      "body": "## Summary\nLeone power — anchor plant with damage reduction.\n\n## Acceptance criteria\n- [ ] Server logic matches BeyWeb `leone_wide_ball` in impl.js\n- [ ] Cooldown and duration from abilities.json\n- [ ] onContact/onStep hooks wired in MatchService\n- [ ] Client VFX port from js/render/leoneAbilityVfx.js\n- [ ] Parity spot-check vs BeyWeb local match\n\n## BeyWeb reference\n- `js/game/abilities/impl.js` (`leone_wide_ball`)\n- `js/render/leoneAbilityVfx.js`\n- `reference/abilities.json`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Abilities/LeoneWideBall.lua`\n- `src/StarterPlayer/StarterPlayerScripts/VFX/LeoneWideBall.client.lua`",
+      "labels": [
+        "phase-3",
+        "abilities"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Port ability: leone_lion_wall",
+      "body": "## Summary\nLeone special — hover tornado wall with repulse pulses.\n\n## Acceptance criteria\n- [ ] Server logic matches BeyWeb `leone_lion_wall` in impl.js\n- [ ] Cooldown and duration from abilities.json\n- [ ] onContact/onStep hooks wired in MatchService\n- [ ] Client VFX port from js/render/leoneAbilityVfx.js\n- [ ] Parity spot-check vs BeyWeb local match\n\n## BeyWeb reference\n- `js/game/abilities/impl.js` (`leone_lion_wall`)\n- `js/render/leoneAbilityVfx.js`\n- `reference/abilities.json`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Abilities/LeoneLionWall.lua`\n- `src/StarterPlayer/StarterPlayerScripts/VFX/LeoneLionWall.client.lua`",
+      "labels": [
+        "phase-3",
+        "abilities"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Port ability: libra_sonic_shield",
+      "body": "## Summary\nLibra power — radial repulse aura while draining self spin.\n\n## Acceptance criteria\n- [ ] Server logic matches BeyWeb `libra_sonic_shield` in impl.js\n- [ ] Cooldown and duration from abilities.json\n- [ ] onContact/onStep hooks wired in MatchService\n- [ ] Client VFX port from js/render/libraAbilityVfx.js\n- [ ] Parity spot-check vs BeyWeb local match\n\n## BeyWeb reference\n- `js/game/abilities/impl.js` (`libra_sonic_shield`)\n- `js/render/libraAbilityVfx.js`\n- `reference/abilities.json`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Abilities/LibraSonicShield.lua`\n- `src/StarterPlayer/StarterPlayerScripts/VFX/LibraSonicShield.client.lua`",
+      "labels": [
+        "phase-3",
+        "abilities"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Port ability: libra_sonic_buster",
+      "body": "## Summary\nLibra special — center pull quicksand field with vibration phase.\n\n## Acceptance criteria\n- [ ] Server logic matches BeyWeb `libra_sonic_buster` in impl.js\n- [ ] Cooldown and duration from abilities.json\n- [ ] onContact/onStep hooks wired in MatchService\n- [ ] Client VFX port from js/render/libraAbilityVfx.js\n- [ ] Parity spot-check vs BeyWeb local match\n\n## BeyWeb reference\n- `js/game/abilities/impl.js` (`libra_sonic_buster`)\n- `js/render/libraAbilityVfx.js`\n- `reference/abilities.json`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Abilities/LibraSonicBuster.lua`\n- `src/StarterPlayer/StarterPlayerScripts/VFX/LibraSonicBuster.client.lua`",
+      "labels": [
+        "phase-3",
+        "abilities"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Port ability: bull_maximum_stampede",
+      "body": "## Summary\nBull power — temporary speed and knockback buff.\n\n## Acceptance criteria\n- [ ] Server logic matches BeyWeb `bull_maximum_stampede` in impl.js\n- [ ] Cooldown and duration from abilities.json\n- [ ] onContact/onStep hooks wired in MatchService\n- [ ] Client VFX port from js/render/bullAbilityVfx.js\n- [ ] Parity spot-check vs BeyWeb local match\n\n## BeyWeb reference\n- `js/game/abilities/impl.js` (`bull_maximum_stampede`)\n- `js/render/bullAbilityVfx.js`\n- `reference/abilities.json`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Abilities/BullMaximumStampede.lua`\n- `src/StarterPlayer/StarterPlayerScripts/VFX/BullMaximumStampede.client.lua`",
+      "labels": [
+        "phase-3",
+        "abilities"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "Port ability: bull_red_horn_uppercut",
+      "body": "## Summary\nBull special — rim charge, launch, and slam uppercut.\n\n## Acceptance criteria\n- [ ] Server logic matches BeyWeb `bull_red_horn_uppercut` in impl.js\n- [ ] Cooldown and duration from abilities.json\n- [ ] onContact/onStep hooks wired in MatchService\n- [ ] Client VFX port from js/render/bullAbilityVfx.js\n- [ ] Parity spot-check vs BeyWeb local match\n\n## BeyWeb reference\n- `js/game/abilities/impl.js` (`bull_red_horn_uppercut`)\n- `js/render/bullAbilityVfx.js`\n- `reference/abilities.json`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Abilities/BullRedHornUppercut.lua`\n- `src/StarterPlayer/StarterPlayerScripts/VFX/BullRedHornUppercut.client.lua`",
+      "labels": [
+        "phase-3",
+        "abilities"
+      ],
+      "milestone": "Phase 3: Abilities & Assets"
+    },
+    {
+      "title": "MatchInput RemoteEvent",
+      "body": "## Summary\nClients send steer and ability inputs only; server authoritative.\n\n## Acceptance criteria\n- [ ] MatchInput RemoteEvent in Remotes\n- [ ] Payload: tick, steerX, steerZ, abilitySlot\n- [ ] Server validates rate and bounds\n- [ ] Inputs queued per player per tick\n\n## BeyWeb reference\n- `js/net/remoteInput.js`\n- `js/net/protocol.js`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Remotes/MatchInput`\n- `src/ServerScriptService/MatchService.lua`",
+      "labels": [
+        "phase-4",
+        "networking"
+      ],
+      "milestone": "Phase 4: PvP & Networking"
+    },
+    {
+      "title": "MatchSnapshot broadcast",
+      "body": "## Summary\nServer broadcasts 60Hz state snapshots to clients.\n\n## Acceptance criteria\n- [ ] UnreliableRemoteEvent for snapshots\n- [ ] Includes bey pos, vel, spin, ability state\n- [ ] Delta compression optional follow-up\n- [ ] Clients apply on receive\n\n## BeyWeb reference\n- `js/net/snapshot.js`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Remotes/MatchSnapshot`\n- `src/ServerScriptService/MatchService.lua`",
+      "labels": [
+        "phase-4",
+        "networking"
+      ],
+      "milestone": "Phase 4: PvP & Networking"
+    },
+    {
+      "title": "Client interpolation port",
+      "body": "## Summary\nSmooth remote bey motion between snapshots.\n\n## Acceptance criteria\n- [ ] Buffer 2–3 snapshots\n- [ ] Interpolate position and spin visual\n- [ ] Snap on large divergence\n- [ ] Local player uses prediction optional\n\n## BeyWeb reference\n- `js/net/interpolation.js`\n\n## BeyBlox target paths\n- `src/StarterPlayer/StarterPlayerScripts/Interpolation.client.lua`",
+      "labels": [
+        "phase-4",
+        "networking"
+      ],
+      "milestone": "Phase 4: PvP & Networking"
+    },
+    {
+      "title": "MatchService authoritative tick loop",
+      "body": "## Summary\nPort Room.js 60Hz simulation loop into MatchService.\n\n## Acceptance criteria\n- [ ] Fixed 1/60 dt step\n- [ ] Processes inputs then physics then abilities\n- [ ] Emits snapshot after each tick\n- [ ] Match seed logged for parity tests\n\n## BeyWeb reference\n- `server/Room.js`\n- `js/game/engine.js`\n\n## BeyBlox target paths\n- `src/ServerScriptService/MatchService.lua`",
+      "labels": [
+        "phase-4",
+        "networking",
+        "physics"
+      ],
+      "milestone": "Phase 4: PvP & Networking"
+    },
+    {
+      "title": "Ranked 1v1 matchmaking queue",
+      "body": "## Summary\nQueue players by ELO and teleport to reserved arena servers.\n\n## Acceptance criteria\n- [ ] Join queue from hub portal\n- [ ] ELO band widening over time\n- [ ] TeleportService to arena on match found\n- [ ] Disconnect re-queues or forfeits\n\n## BeyWeb reference\n- `js/ui/onlineLobby.js`\n- `js/game/onlineController.js`\n\n## BeyBlox target paths\n- `src/ServerScriptService/MatchmakingService.lua`",
+      "labels": [
+        "phase-4",
+        "networking"
+      ],
+      "milestone": "Phase 4: PvP & Networking"
+    },
+    {
+      "title": "ELO rating updates after ranked match",
+      "body": "## Summary\nApply Elo changes server-side after validated match end.\n\n## Acceptance criteria\n- [ ] K-factor and placement from Shared/Elo.lua\n- [ ] Winner/loser delta persisted to profile\n- [ ] Draw handling defined\n- [ ] Anti-farm cooldown optional\n\n## BeyWeb reference\n- BeyWeb has no ELO — new system\n- `docs/PROGRESSION_ECONOMY.md`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Elo.lua`\n- `src/ServerScriptService/ProfileService.lua`",
+      "labels": [
+        "phase-4",
+        "networking",
+        "infra"
+      ],
+      "milestone": "Phase 4: PvP & Networking"
+    },
+    {
+      "title": "Global ELO leaderboard",
+      "body": "## Summary\nOrderedDataStore leaderboard for top rated players.\n\n## Acceptance criteria\n- [ ] Top N displayed in hub UI\n- [ ] Updates after ranked win\n- [ ] Username + rating + rank\n- [ ] Paged fetch with caching\n\n## BeyWeb reference\n- N/A (Roblox-specific)\n\n## BeyBlox target paths\n- `src/ServerScriptService/LeaderboardService.lua`\n- `src/StarterGui/Leaderboards/Global`",
+      "labels": [
+        "phase-4",
+        "ui",
+        "infra"
+      ],
+      "milestone": "Phase 4: PvP & Networking"
+    },
+    {
+      "title": "Friends leaderboard",
+      "body": "## Summary\nShow ELO/rank among player's Roblox friends.\n\n## Acceptance criteria\n- [ ] Friends list fetched via Players service\n- [ ] Sorted by ELO from profiles\n- [ ] Displayed in hub leaderboard tab\n- [ ] Privacy-safe (no hidden stats leaked)\n\n## BeyWeb reference\n- N/A (Roblox-specific)\n\n## BeyBlox target paths\n- `src/StarterGui/Leaderboards/Friends`\n- `src/ServerScriptService/LeaderboardService.lua`",
+      "labels": [
+        "phase-4",
+        "ui"
+      ],
+      "milestone": "Phase 4: PvP & Networking"
+    },
+    {
+      "title": "Campaign controller port",
+      "body": "## Summary\nPort campaign stage progression and rival sequencing.\n\n## Acceptance criteria\n- [ ] 5 stages from campaign.json\n- [ ] Win advances stage; loss allows retry\n- [ ] Rewards hook on campaign clear\n- [ ] Separate from ranked rules\n\n## BeyWeb reference\n- `js/game/campaign.js`\n- `js/game/campaignController.js`\n- `reference/campaign.json`\n\n## BeyBlox target paths\n- `src/ServerScriptService/CampaignService.lua`\n- `reference/campaign.json`",
+      "labels": [
+        "phase-5",
+        "infra"
+      ],
+      "milestone": "Phase 5: Campaign & AI"
+    },
+    {
+      "title": "AI opponent tiers port ai.js",
+      "body": "## Summary\nPort CPU steering AI with difficulty tiers.\n\n## Acceptance criteria\n- [ ] AI sends steer via same input path\n- [ ] Tiers: easy/medium/hard/expert\n- [ ] Ability usage tuned per tier\n- [ ] No access to hidden player input\n\n## BeyWeb reference\n- `js/input/ai.js`\n\n## BeyBlox target paths\n- `src/ServerScriptService/AI/OpponentAI.lua`",
+      "labels": [
+        "phase-5",
+        "physics"
+      ],
+      "milestone": "Phase 5: Campaign & AI"
+    },
+    {
+      "title": "Casual mode random rival",
+      "body": "## Summary\nQuick play vs random CPU bey without ranked stakes.\n\n## Acceptance criteria\n- [ ] Random bey from catalog\n- [ ] No ELO change\n- [ ] Best-of-1 or 3 selectable\n- [ ] Launched from hub portal\n\n## BeyWeb reference\n- `js/game/casualMode.js`\n\n## BeyBlox target paths\n- `src/ServerScriptService/CasualService.lua`\n- `src/ReplicatedStorage/Shared/GameModes.lua`",
+      "labels": [
+        "phase-5"
+      ],
+      "milestone": "Phase 5: Campaign & AI"
+    },
+    {
+      "title": "CPU difficulty selection UI",
+      "body": "## Summary\nHub UI to pick AI difficulty before casual/campaign match.\n\n## Acceptance criteria\n- [ ] Dropdown or buttons for tiers\n- [ ] Selection sent to server\n- [ ] Persisted as player preference\n- [ ] Shown during loading screen\n\n## BeyWeb reference\n- `js/ui/playSetup.js`\n\n## BeyBlox target paths\n- `src/StarterGui/PlaySetup/DifficultySelect`",
+      "labels": [
+        "phase-5",
+        "ui"
+      ],
+      "milestone": "Phase 5: Campaign & AI"
+    },
+    {
+      "title": "Campaign completion rewards",
+      "body": "## Summary\nGrant coins/XP/unlocks on stage and campaign milestones.\n\n## Acceptance criteria\n- [ ] Per-stage coin payout\n- [ ] Bonus on full campaign clear\n- [ ] Server validates stage index\n- [ ] Profile updated atomically\n\n## BeyWeb reference\n- `js/game/campaign.js`\n\n## BeyBlox target paths\n- `src/ServerScriptService/CampaignService.lua`\n- `src/ReplicatedStorage/Shared/Progression.lua`",
+      "labels": [
+        "phase-5",
+        "infra"
+      ],
+      "milestone": "Phase 5: Campaign & AI"
+    },
+    {
+      "title": "XP and level progression",
+      "body": "## Summary\nAward XP from matches and level up with unlock table.\n\n## Acceptance criteria\n- [ ] XP granted on match end server-side\n- [ ] Level curve from Progression.lua\n- [ ] Level-up notification in hub\n- [ ] Profile stores level + xp\n\n## BeyWeb reference\n- `docs/PROGRESSION_ECONOMY.md`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Progression.lua`\n- `src/ServerScriptService/ProfileService.lua`",
+      "labels": [
+        "phase-6",
+        "infra"
+      ],
+      "milestone": "Phase 6: Meta & Shop"
+    },
+    {
+      "title": "Coin rewards from matches",
+      "body": "## Summary\nDistribute coins based on mode, win/loss, and performance.\n\n## Acceptance criteria\n- [ ] Coins added server-side only\n- [ ] Different tables per mode\n- [ ] Shown on results screen\n- [ ] Persisted in profile\n\n## BeyWeb reference\n- `docs/PROGRESSION_ECONOMY.md`\n\n## BeyBlox target paths\n- `src/ServerScriptService/MatchService.lua`\n- `src/ReplicatedStorage/Shared/Progression.lua`",
+      "labels": [
+        "phase-6",
+        "infra"
+      ],
+      "milestone": "Phase 6: Meta & Shop"
+    },
+    {
+      "title": "Gacha roll UI",
+      "body": "## Summary\nShop ScreenGui for spending coins on random bey/part rolls.\n\n## Acceptance criteria\n- [ ] Roll animation plays on client\n- [ ] Result revealed after server ack\n- [ ] Shows pity or duplicate handling\n- [ ] Mobile-friendly layout\n\n## BeyWeb reference\n- N/A (Roblox-specific gacha)\n\n## BeyBlox target paths\n- `src/StarterGui/Shop/RollUI`",
+      "labels": [
+        "phase-6",
+        "ui"
+      ],
+      "milestone": "Phase 6: Meta & Shop"
+    },
+    {
+      "title": "Server-side roll validation",
+      "body": "## Summary\nAuthoritative RNG for gacha; client cannot pick outcomes.\n\n## Acceptance criteria\n- [ ] Roll request RemoteFunction\n- [ ] Deduct coins atomically\n- [ ] Weighted table from catalog\n- [ ] Duplicate → coins refund rule\n\n## BeyWeb reference\n- N/A\n\n## BeyBlox target paths\n- `src/ServerScriptService/ShopService.lua`",
+      "labels": [
+        "phase-6",
+        "infra"
+      ],
+      "milestone": "Phase 6: Meta & Shop"
+    },
+    {
+      "title": "Robux developer products",
+      "body": "## Summary\nMarketplaceService products for coin packs and premium rolls.\n\n## Acceptance criteria\n- [ ] Product IDs in config\n- [ ] Receipt validation on server\n- [ ] Grant currency/items on ProcessReceipt\n- [ ] Hub shop displays Robux prices\n\n## BeyWeb reference\n- N/A\n\n## BeyBlox target paths\n- `src/ServerScriptService/ShopService.lua`\n- `src/ReplicatedStorage/Shared/ShopCatalog.lua`",
+      "labels": [
+        "phase-6",
+        "infra"
+      ],
+      "milestone": "Phase 6: Meta & Shop"
+    },
+    {
+      "title": "Daily free roll",
+      "body": "## Summary\nOne free gacha roll per 24h per player.\n\n## Acceptance criteria\n- [ ] Timestamp stored in profile\n- [ ] UI shows cooldown timer\n- [ ] Server rejects early re-roll\n- [ ] Resets on UTC midnight or rolling 24h\n\n## BeyWeb reference\n- N/A\n\n## BeyBlox target paths\n- `src/ServerScriptService/ShopService.lua`\n- `src/StarterGui/Shop/DailyRoll`",
+      "labels": [
+        "phase-6",
+        "ui",
+        "infra"
+      ],
+      "milestone": "Phase 6: Meta & Shop"
+    },
+    {
+      "title": "Level-gated bey unlocks",
+      "body": "## Summary\nLock certain beys until player reaches required level.\n\n## Acceptance criteria\n- [ ] BeyCatalog marks unlock level\n- [ ] Locked beys greyed in carousel\n- [ ] Server rejects locked bey in ranked\n- [ ] Unlock toast on level-up\n\n## BeyWeb reference\n- `js/game/beys.js` (ownership concept)\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/BeyCatalog.lua`\n- `src/ReplicatedStorage/Shared/Progression.lua`",
+      "labels": [
+        "phase-6",
+        "infra"
+      ],
+      "milestone": "Phase 6: Meta & Shop"
+    },
+    {
+      "title": "Profile sync to client",
+      "body": "## Summary\nReplicate profile slices to client for UI after changes.\n\n## Acceptance criteria\n- [ ] ProfileSync remote on join and updates\n- [ ] Client caches for inventory/shop UI\n- [ ] Minimal payload (no secrets)\n- [ ] Handles mid-session purchases\n\n## BeyWeb reference\n- N/A\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Remotes/ProfileSync`\n- `src/ServerScriptService/ProfileService.lua`",
+      "labels": [
+        "phase-6",
+        "networking"
+      ],
+      "milestone": "Phase 6: Meta & Shop"
+    },
+    {
+      "title": "Tournament bracket generator",
+      "body": "## Summary\nSingle-elimination bracket for 8/16 players.\n\n## Acceptance criteria\n- [ ] Seeding by ELO or random\n- [ ] Bye handling for non-power-of-two\n- [ ] Bracket state in DataStore\n- [ ] Match pairs fed to MatchmakingService\n\n## BeyWeb reference\n- N/A\n\n## BeyBlox target paths\n- `src/ServerScriptService/TournamentService.lua`",
+      "labels": [
+        "phase-7",
+        "infra"
+      ],
+      "milestone": "Phase 7: Tournaments"
+    },
+    {
+      "title": "Tournament entry gates (BP + level + fee)",
+      "body": "## Summary\nValidate Bey Points, level, and coin entry fee before join.\n\n## Acceptance criteria\n- [ ] Configurable gates per event\n- [ ] Deduct fee on successful entry\n- [ ] Refund on event cancel\n- [ ] Error messages in UI\n\n## BeyWeb reference\n- `docs/PROGRESSION_ECONOMY.md`\n\n## BeyBlox target paths\n- `src/ServerScriptService/TournamentService.lua`\n- `src/ReplicatedStorage/Shared/Progression.lua`",
+      "labels": [
+        "phase-7",
+        "infra"
+      ],
+      "milestone": "Phase 7: Tournaments"
+    },
+    {
+      "title": "Scheduled tournament event UI",
+      "body": "## Summary\nHub UI listing upcoming tournaments with countdown timers.\n\n## Acceptance criteria\n- [ ] Event cards with start time\n- [ ] Register button when gates pass\n- [ ] Shows prize pool\n- [ ] Timezone-aware display\n\n## BeyWeb reference\n- N/A\n\n## BeyBlox target paths\n- `src/StarterGui/Tournaments/EventList`",
+      "labels": [
+        "phase-7",
+        "ui"
+      ],
+      "milestone": "Phase 7: Tournaments"
+    },
+    {
+      "title": "Tournament placement rewards",
+      "body": "## Summary\nDistribute coins, XP, and badges by final placement.\n\n## Acceptance criteria\n- [ ] 1st/2nd/3rd reward tables\n- [ ] Granted on bracket resolve\n- [ ] Server authoritative\n- [ ] Results screen in hub\n\n## BeyWeb reference\n- N/A\n\n## BeyBlox target paths\n- `src/ServerScriptService/TournamentService.lua`",
+      "labels": [
+        "phase-7",
+        "infra"
+      ],
+      "milestone": "Phase 7: Tournaments"
+    },
+    {
+      "title": "Tournament match flow integration",
+      "body": "## Summary\nWire bracket winners to next round teleports automatically.\n\n## Acceptance criteria\n- [ ] Winner reported from MatchService\n- [ ] Loser eliminated from bracket\n- [ ] Final round crowns champion\n- [ ] Disconnect = forfeit after timeout\n\n## BeyWeb reference\n- `js/game/onlineController.js` (forfeit timing)\n\n## BeyBlox target paths\n- `src/ServerScriptService/TournamentService.lua`\n- `src/ServerScriptService/MatchService.lua`",
+      "labels": [
+        "phase-7",
+        "networking"
+      ],
+      "milestone": "Phase 7: Tournaments"
+    },
+    {
+      "title": "Party queue for 2v2",
+      "body": "## Summary\nForm 2-player parties and queue as a team.\n\n## Acceptance criteria\n- [ ] Invite friend to party\n- [ ] Party leader starts queue\n- [ ] Both must own eligible beys\n- [ ] Party dissolves on disconnect policy\n\n## BeyWeb reference\n- N/A\n\n## BeyBlox target paths\n- `src/ServerScriptService/MatchmakingService.lua`\n- `src/StarterGui/Party/`",
+      "labels": [
+        "phase-8",
+        "networking",
+        "ui"
+      ],
+      "milestone": "Phase 8: 2v2 Team Modes"
+    },
+    {
+      "title": "Team spawn layout in arena",
+      "body": "## Summary\nFour launch points for 2v2 with team pairing.\n\n## Acceptance criteria\n- [ ] Team A on one side, Team B opposite\n- [ ] Tag-team spawn order supported\n- [ ] No spawn collision overlap\n- [ ] Camera frames all active beys\n\n## BeyWeb reference\n- `js/render/arena.js` (launch points)\n\n## BeyBlox target paths\n- `src/Workspace/Arena/SpawnPoints`\n- `src/ServerScriptService/MatchService.lua`",
+      "labels": [
+        "phase-8",
+        "graphics"
+      ],
+      "milestone": "Phase 8: 2v2 Team Modes"
+    },
+    {
+      "title": "Team ELO rating",
+      "body": "## Summary\nAggregate or pair ELO for 2v2 ranked.\n\n## Acceptance criteria\n- [ ] Team rating formula documented\n- [ ] Delta applied per member\n- [ ] Separate 2v2 ladder optional\n- [ ] Displayed on results screen\n\n## BeyWeb reference\n- N/A\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Elo.lua`\n- `src/ServerScriptService/MatchmakingService.lua`",
+      "labels": [
+        "phase-8",
+        "networking",
+        "infra"
+      ],
+      "milestone": "Phase 8: 2v2 Team Modes"
+    },
+    {
+      "title": "Tag-team battle mode",
+      "body": "## Summary\nOnly one bey per team active; swap on KO or player tag.\n\n## Acceptance criteria\n- [ ] Bench bey visible on platform\n- [ ] Tag input swaps active fighter\n- [ ] Cooldown on tag optional\n- [ ] Win when both opponents eliminated\n\n## BeyWeb reference\n- N/A (extension of BeyWeb 1v1)\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/GameModes.lua`\n- `src/ServerScriptService/MatchService.lua`",
+      "labels": [
+        "phase-8",
+        "physics"
+      ],
+      "milestone": "Phase 8: 2v2 Team Modes"
+    },
+    {
+      "title": "Team series HUD",
+      "body": "## Summary\nHUD showing 2v2 series score and active fighters.\n\n## Acceptance criteria\n- [ ] Team round wins displayed\n- [ ] Icons for benched vs active\n- [ ] Ability bars for local active bey\n- [ ] Works in tag-team and simultaneous\n\n## BeyWeb reference\n- `js/ui/domRefs.js`\n\n## BeyBlox target paths\n- `src/StarterGui/BattleHUD/TeamSeries`",
+      "labels": [
+        "phase-8",
+        "ui"
+      ],
+      "milestone": "Phase 8: 2v2 Team Modes"
+    },
+    {
+      "title": "Part catalog data module",
+      "body": "## Summary\nDefine track, fusion wheel, performance tip parts with stat mods.\n\n## Acceptance criteria\n- [ ] Parts in Shared module + JSON\n- [ ] Rarity and drop weights\n- [ ] Compatible with bey builder\n- [ ] Synced from design doc\n\n## BeyWeb reference\n- BeyWeb has no parts — new system\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/PartCatalog.lua`\n- `reference/parts.json`",
+      "labels": [
+        "phase-9",
+        "infra"
+      ],
+      "milestone": "Phase 9: Parts & Customization"
+    },
+    {
+      "title": "Bey builder UI",
+      "body": "## Summary\nScreenGui to equip parts on a bey and preview stats.\n\n## Acceptance criteria\n- [ ] Drag or slot-based part equip\n- [ ] Live stat preview\n- [ ] Save loadout to profile\n- [ ] Validate owned parts server-side\n\n## BeyWeb reference\n- `js/ui/selection.js` (inspiration)\n\n## BeyBlox target paths\n- `src/StarterGui/BeyBuilder/`",
+      "labels": [
+        "phase-9",
+        "ui"
+      ],
+      "milestone": "Phase 9: Parts & Customization"
+    },
+    {
+      "title": "Stat recomputation from parts",
+      "body": "## Summary\nRecompute ATK/DEF/STA from base bey + equipped parts.\n\n## Acceptance criteria\n- [ ] Uses Stats.lua helpers\n- [ ] Server authoritative on match start\n- [ ] Matches displayed preview\n- [ ] Caps prevent overflow exploits\n\n## BeyWeb reference\n- `js/game/stats.js`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Stats.lua`\n- `src/ServerScriptService/MatchService.lua`",
+      "labels": [
+        "phase-9",
+        "physics",
+        "infra"
+      ],
+      "milestone": "Phase 9: Parts & Customization"
+    },
+    {
+      "title": "Color variants on bey mesh",
+      "body": "## Summary\nApply part-driven color regions on imported meshes.\n\n## Acceptance criteria\n- [ ] SurfaceAppearance or vertex color\n- [ ] Preview in builder UI\n- [ ] Synced in snapshot cosmetic field\n- [ ] Default palette per bey\n\n## BeyWeb reference\n- `js/render/top.js` (material colors)\n\n## BeyBlox target paths\n- `src/StarterPlayer/StarterPlayerScripts/BeyVisual.client.lua`\n- `assets/Beys/`",
+      "labels": [
+        "phase-9",
+        "graphics",
+        "assets"
+      ],
+      "milestone": "Phase 9: Parts & Customization"
+    },
+    {
+      "title": "Part drops from gacha rolls",
+      "body": "## Summary\nExtend shop rolls to award parts with duplicate handling.\n\n## Acceptance criteria\n- [ ] Roll table includes parts\n- [ ] Duplicate → shard or coin refund\n- [ ] Inventory stores part counts\n- [ ] Rare part announcement UI\n\n## BeyWeb reference\n- N/A\n\n## BeyBlox target paths\n- `src/ServerScriptService/ShopService.lua`\n- `src/ReplicatedStorage/Shared/PartCatalog.lua`",
+      "labels": [
+        "phase-9",
+        "infra"
+      ],
+      "milestone": "Phase 9: Parts & Customization"
+    },
+    {
+      "title": "Battle and UI audio SFX",
+      "body": "## Summary\nAdd SoundService SFX for clash, launch, KO, UI clicks.\n\n## Acceptance criteria\n- [ ] Clash sound on client clash event\n- [ ] Countdown beeps\n- [ ] KO sting\n- [ ] Volume sliders in settings\n\n## BeyWeb reference\n- BeyWeb audio (if any in engine)\n\n## BeyBlox target paths\n- `src/SoundService/`\n- `src/StarterGui/Settings/Audio`",
+      "labels": [
+        "phase-10",
+        "assets"
+      ],
+      "milestone": "Phase 10: Polish & QA"
+    },
+    {
+      "title": "KO slow-motion camera",
+      "body": "## Summary\nBrief slow-mo and camera punch on ring-out KO.\n\n## Acceptance criteria\n- [ ] TimeScale tween on KO\n- [ ] Camera FOV punch\n- [ ] Skippable after 1s\n- [ ] Disabled in ranked if distracting\n\n## BeyWeb reference\n- `js/physics/ringOut.js`\n\n## BeyBlox target paths\n- `src/StarterPlayer/StarterPlayerScripts/RingOutCinematic.client.lua`",
+      "labels": [
+        "phase-10",
+        "animations"
+      ],
+      "milestone": "Phase 10: Polish & QA"
+    },
+    {
+      "title": "Mobile touch battle UI",
+      "body": "## Summary\nOptimize battle HUD and steer touch zones for phones.\n\n## Acceptance criteria\n- [ ] Large steer touch area\n- [ ] Ability buttons thumb-reachable\n- [ ] Safe area insets respected\n- [ ] No overlap with spin bars\n\n## BeyWeb reference\n- `js/main-mobile.js`\n\n## BeyBlox target paths\n- `src/StarterGui/BattleHUD/MobileLayout`",
+      "labels": [
+        "phase-10",
+        "ui"
+      ],
+      "milestone": "Phase 10: Polish & QA"
+    },
+    {
+      "title": "Anti-cheat input rate limiting",
+      "body": "## Summary\nReject excessive or impossible MatchInput from clients.\n\n## Acceptance criteria\n- [ ] Max inputs per second enforced\n- [ ] Steer magnitude clamped\n- [ ] Ability spam blocked\n- [ ] Log anomalies for review\n\n## BeyWeb reference\n- `server/Room.js` (validation patterns)\n\n## BeyBlox target paths\n- `src/ServerScriptService/MatchService.lua`",
+      "labels": [
+        "phase-10",
+        "infra",
+        "networking"
+      ],
+      "milestone": "Phase 10: Polish & QA"
+    },
+    {
+      "title": "Unit tests: Stats, Rules, Elo",
+      "body": "## Summary\nTestEZ tests for pure Shared modules.\n\n## Acceptance criteria\n- [ ] Stats recomputation cases\n- [ ] KO/SO/draw rule cases\n- [ ] Elo delta edge cases\n- [ ] CI runs via foreman/lune\n\n## BeyWeb reference\n- `js/game/stats.js`\n- `js/game/rules.js`\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Stats.lua`\n- `src/ReplicatedStorage/Shared/Rules.lua`\n- `src/ReplicatedStorage/Shared/Elo.lua`\n- `tests/`",
+      "labels": [
+        "phase-10",
+        "infra"
+      ],
+      "milestone": "Phase 10: Polish & QA"
+    },
+    {
+      "title": "BeyWeb physics parity test harness",
+      "body": "## Summary\nReplay BeyWeb input logs through Roblox sim and compare outcomes.\n\n## Acceptance criteria\n- [ ] Import match seed + inputs\n- [ ] Compare final positions within epsilon\n- [ ] Passive physics (no abilities) pass first\n- [ ] Document in MIGRATION_FROM_BEYWEB.md\n\n## BeyWeb reference\n- `server/Room.js` (matchSeed)\n- `docs/MIGRATION_FROM_BEYWEB.md`\n\n## BeyBlox target paths\n- `tests/parity/`\n- `src/ServerScriptService/MatchService.lua`",
+      "labels": [
+        "phase-10",
+        "physics",
+        "infra"
+      ],
+      "milestone": "Phase 10: Polish & QA"
+    },
+    {
+      "title": "Load test MatchSnapshot throughput",
+      "body": "## Summary\nStress-test snapshot broadcast with multiple spectators.\n\n## Acceptance criteria\n- [ ] Simulate 10+ clients receiving snapshots\n- [ ] Measure server CPU and bandwidth\n- [ ] Tune snapshot payload size\n- [ ] Document limits\n\n## BeyWeb reference\n- `js/net/snapshot.js`\n\n## BeyBlox target paths\n- `tests/load/snapshot.lua` (or external script)",
+      "labels": [
+        "phase-10",
+        "networking",
+        "infra"
+      ],
+      "milestone": "Phase 10: Polish & QA"
+    },
+    {
+      "title": "Seasonal badges and profile flair",
+      "body": "## Summary\nAward cosmetic badges for seasonal ranked/tournament placement.\n\n## Acceptance criteria\n- [ ] Badge ids in profile\n- [ ] Displayed on leaderboard and hub nameplate\n- [ ] Season rollover archives old badge\n- [ ] No pay-to-win stats\n\n## BeyWeb reference\n- N/A\n\n## BeyBlox target paths\n- `src/ReplicatedStorage/Shared/Progression.lua`\n- `src/StarterGui/Profile/Flair`",
+      "labels": [
+        "phase-10",
+        "ui"
+      ],
+      "milestone": "Phase 10: Polish & QA"
+    }
+  ]
+}

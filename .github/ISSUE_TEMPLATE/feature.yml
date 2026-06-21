@@ -1,0 +1,41 @@
+name: Feature
+description: New gameplay system, UI, or content
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: phase
+    attributes:
+      label: Phase
+      options:
+        - "Phase 1 — Hub & Profiles"
+        - "Phase 2 — Core Battle"
+        - "Phase 3 — Abilities & VFX"
+        - "Phase 4 — PvP & Networking"
+        - "Phase 5 — Campaign & AI"
+        - "Phase 6 — Meta & Shop"
+        - "Phase 7 — Tournaments"
+        - "Phase 8 — 2v2"
+        - "Phase 9 — Parts & Customization"
+        - "Phase 10 — Polish & QA"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What should be built and why?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Checklist of done conditions
+      value: |
+        - [ ] 
+  - type: textarea
+    id: beyweb-ref
+    attributes:
+      label: BeyWeb reference (if porting)
+      description: File paths in the BeyWeb repo to port from

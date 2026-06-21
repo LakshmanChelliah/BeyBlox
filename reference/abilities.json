@@ -1,0 +1,12 @@
+[
+  { "id": "pegasus_speed_boost", "name": "Speed Boost", "slot": "power", "charge": 8, "cooldown": 12, "duration": 3, "windup": 0 },
+  { "id": "pegasus_star_blast", "name": "Star Blast Attack", "slot": "special", "charge": 14, "cooldown": 18, "duration": 4.5, "windup": 0.55 },
+  { "id": "ldrago_spin_steal", "name": "Spin Steal", "slot": "power", "charge": 10, "cooldown": 14, "duration": 4, "windup": 0 },
+  { "id": "ldrago_supreme_flight", "name": "Dragon Emperor Supreme Flight", "slot": "special", "charge": 16, "cooldown": 22, "duration": 3.05, "windup": 0.65 },
+  { "id": "leone_wide_ball", "name": "Wide Ball Anchor", "slot": "power", "charge": 9, "cooldown": 13, "duration": 3.5, "windup": 0 },
+  { "id": "leone_lion_wall", "name": "Lion Gale Force Wall", "slot": "special", "charge": 15, "cooldown": 20, "duration": 5.55, "windup": 0.5 },
+  { "id": "libra_sonic_shield", "name": "Sonic Shield", "slot": "power", "charge": 8, "cooldown": 12, "duration": 3, "windup": 0 },
+  { "id": "libra_sonic_buster", "name": "Sonic Buster", "slot": "special", "charge": 14, "cooldown": 18, "duration": 4, "windup": 0.5 },
+  { "id": "bull_maximum_stampede", "name": "Maximum Stampede", "slot": "power", "charge": 9, "cooldown": 13, "duration": 3, "windup": 0 },
+  { "id": "bull_red_horn_uppercut", "name": "Red Horn Uppercut", "slot": "special", "charge": 14, "cooldown": 18, "duration": 3.5, "windup": 0.45 }
+]

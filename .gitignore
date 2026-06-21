@@ -1,0 +1,17 @@
+# Roblox Studio
+*.rbxl
+*.rbxlx
+*.rbxm
+*.rbxmx
+
+# Rojo / tooling
+/sourcemap.json
+/build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets — never commit API keys or DataStore backups
+.env
+*.secret.json
